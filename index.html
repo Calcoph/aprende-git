@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprende Git</title>
+    <!-- Estilo inspirado en https://perfectmotherfuckingwebsite.com/ -->
+    <style>
+        body {
+            max-width: 650px;
+            margin: 40px auto;
+            padding: 0 10px;
+            background: #eee;
+        }
+    </style>
+</head>
+<body>
+    <h1>Aprende Git</h1>
+    <a href="https://git-scm.com/docs">Documentación oficial de git</a>
+
+    <h3>Índice:</h3>
+    <ol>
+        <a href="#Introduccion"><li>Introducción</li></a>
+        <a href="#Conceptos"><li>Conceptos básicos</li></a>
+            <ul>
+                <a href="#Commit"><li>Commit</li></a>
+                <a href="#Branch"><li>Rama (branch)</li></a>
+            </ul>
+    </ol>
+
+    <ol>
+        <hr>
+        <h2 id="Introduccion"><li>Introducción</li></h2>
+        <p>Git es un sistema de control de versiones. Nos permite mantener un historial completo del código fuente de un proyecto.</p>
+        <hr>
+        <h2 id="Conceptos"><li>Conceptos básicos</li></h2>
+        <h3 id="Commit"><u>Commit</u></h3>
+        <h6><a href="https://git-scm.com/docs/user-manual#understanding-commits">Documentación oficial (línea de comandos)</a></h6>
+        <p>Un commit es una copia completa de los archivos que queda
+            registrada en el repositorio. Además contiene un mensaje corto
+            Que describe los cambios realizados.
+        </p>
+
+        <p>En esta imagen se puede ver el repositorio, en el que Los commits
+            son los Círculos <b>A</b>, <b>B</b> y <b>C</b>. En los
+            rectángulos se puede ver el mensaje asociado a cada commit.
+        </p>
+        <p>En este caso se muestra el repositorio de un proyecto de página web,
+            donde hace falta un registro y un login para la gestión de usuarios.
+        </p>
+        <img src="resources/commit.svg"/>
+        <h3 id="Branch"><u>Rama (branch)</u></h3>
+        <h6><a href="https://git-scm.com/docs/user-manual#what-is-a-branch">Documentación oficial (línea de comandos)</a></h6>
+        <p>
+            Una rama es un posible punto de anclaje para poder añadir un nuevo commit.
+            Es posible crear 2 (o más) ramas a partir de un mismo commit, es decir, permite ramificar el historial de commits.
+        </p>
+
+        <p>Supongamos que tenemos un repositorio sencillo, con 2 commits (<b>A</b> y <b>B</b>).
+            En este repositorio sólo existe una única rama, la <b style="color: #978600">Rama A</b>.
+        </p>
+        <img src="resources/branch1.svg"/>
+
+        <p>Una posible razón para crear una rama es la siguiente:<br>
+            Supongamos que vamos a trabajar en una funcionalidad nueva,
+            pero mientras trabajamos en ella va a hacer que el proyecto deje de funcionar.<br>
+            En ese caso podemos crear una <b style="color: #0f65c7">Rama B</b> para guardar el progreso de la nueva funcionalidad.<br>
+            De este modo, las personas que no trabajen sobre esa funcionalidad, pueden seguir mejorando el resto del proyecto
+            mediante la <b style="color: #978600">Rama A</b>, sin que nuestros cambios le afecten.
+        </p>
+
+        <p>De momento el historial quedaría así:</p>
+        <img src="resources/branch2.svg"/>
+        <p>Se ha creado una nueva rama. Por el momento ambas ramas son exáctamente iguales, ya que su commit más reciente es el <b>B</b>.</p>
+        <p>Si añadimos los cambios que molestan (commit <b>BB</b>) a la <b style="color: #0f65c7">Rama B</b>, el historial quedaría de la siguiente manera:</p>
+        <img src="resources/branch3.svg"/>
+        <p>Como podemos ver, la <b style="color: #978600">Rama A</b>
+            se ha quedado "atrás", es decir, nuestros cambios en
+            <b>BB</b> no molestarán a quien trabaje sobre la
+            <b style="color: #978600">Rama A</b>.
+        </p>
+        <p>El historial quedaría así si alguien añadiese los commits <b>BA</b> y <b>BC</b> a la rama <b style="color: #978600">Rama A</b>.</p>
+        <img src="resources/branch4.svg"/>
+    </ol>
+</body>
+</html>
