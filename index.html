@@ -23,9 +23,14 @@
         <a href="#Introduccion"><li>Introducción</li></a>
         <a href="#Conceptos"><li>Conceptos básicos</li></a>
             <ul>
+                <a href="#Repo"><li>Repositorio</li></a>
                 <a href="#Commit"><li>Commit</li></a>
                 <a href="#Branch"><li>Rama (branch)</li></a>
-                <a href="#Repo"><li>Repositorio</li></a>
+            </ul>
+        <a href="#Merge"><li>Unir ramas (merge)</li></a>
+            <ul>
+                <a href="#Conflict"><li>Conflictos</li></a>
+                <a href="#SolveConflict"><li>Resolución de conflictos</li></a>
             </ul>
     </ol>
     <hr><!-- ----------------------------------------------------------------------------------------------------------------- -->
@@ -97,5 +102,32 @@
     </p>
     <p>El historial quedaría así si alguien añadiese los commits <b>BA</b> y <b>BC</b> a la rama <b style="color: #978600">Rama A</b>.</p>
     <img src="resources/branch4.svg"/>
+    <hr><!-- ----------------------------------------------------------------------------------------------------------------- -->
+
+    <h2 id="Merge"><li>Unir ramas (merge)</li></h2>
+    <p>Para entender bien el <code>merge</code>, es fundamental comprender bien el concepto de
+        <a href="#Branch">rama (branch)</a>, ya que <code>merge</code> es una operación sobre las ramas.
+    </p>
+    <p>Supongamos que partimos del repositorio del apartado
+        <a href="#Branch">Rama (branch)</a>, pero hemos completado la funcionalidad
+        que estábamos desarrollando en la <b style="color: #0f65c7">Rama B</b>. Para esto,
+        hemos generado un nuevo commit <b>BD</b>. El resultado es el siguiente:
+    </p>
+    <img src="resources/merge1.svg"/>
+    <p>Con este nuevo cambio <b>BD</b>, ya no generará ningún problema, por lo que podemos
+        unir la <b style="color: #0f65c7">Rama B</b> a la <b style="color: #978600">Rama A</b>.
+        De este modo los cambios realizados en los commits <b>BB</b> y <b>BD</b> existirán en la <b style="color: #978600">Rama A</b>.
+        El resultado de unir las ramas se almacenaría en un commit <b>C</b> en la <b style="color: #978600">Rama A</b>.
+    </p>
+
+    <p>Tras el <code>merge</code>, el repositorio quedaría así:</p>
+    <img src="resources/merge2.svg"/>
+    <p>Nótese que la <b style="color: #0f65c7">Rama B</b> se ha quedado "Atrás" en <b>BD</b>. Por lo que las ramas siguen siendo separadas.
+        Si queremos, podemos añadir un commit <b>CA</b> a <b style="color: #978600">Rama A</b> y un commit <b>BE</b> a <b style="color: #0f65c7">Rama B</b>.
+    </p>
+    <img src="resources/merge3.svg"/>
+
+    <h3 id="Conflict"><u>Conflictos</u></h3>
+    <h3 id="SolveConflict"><u>Resolución de conflictos</u></h3>
 </body>
 </html>
