@@ -22,24 +22,35 @@
     <ol>
         <a href="#Introduccion"><li>Introducción</li></a>
         <a href="#Conceptos"><li>Conceptos básicos</li></a>
-            <ul>
-                <a href="#Repo"><li>Repositorio</li></a>
-                <a href="#Commit"><li>Commit</li></a>
-                <a href="#Branch"><li>Rama (branch)</li></a>
-            </ul>
+        <ul>
+            <a href="#Repo"><li>Repositorio</li></a>
+            <a href="#Commit"><li>Commit</li></a>
+            <a href="#Branch"><li>Rama (branch)</li></a>
+        </ul>
         <a href="#Merge"><li>Unir ramas (merge)</li></a>
-            <ul>
-                <a href="#Conflict"><li>Conflictos</li></a>
-                <a href="#SolveConflict"><li>Resolución de conflictos</li></a>
-            </ul>
+        <ul>
+            <a href="#Conflict"><li>Conflictos</li></a>
+            <a href="#SolveConflict"><li>Resolución de conflictos</li></a>
+        </ul>
+        <a href="#multiusr"><li>Git con más de un usuario (repositorio remoto)</li></a>
+        <a href="#gitvsgithub"><li>Diferencia entre Git y GitHub</li></a>
+        <a href="#Comandos"><li>Comandos</li></a>
+        <ul>
+            <a href="#git-fetch"><li><code>git fetch</code></li></a>
+            <a href="#git-merge"><li><code>git merge</code></li></a>
+            <a href="#git-pull"><li><code>git pull</code></li></a>
+            <a href="#git-pull"><li><code>git push</code></li></a>
+            <a href="#git-commit"><li><code>git commit</code></li></a>
+            <a href="#git-branch"><li><code>git branch</code></li></a>
+        </ul>
     </ol>
     <hr><!-- ----------------------------------------------------------------------------------------------------------------- -->
 
-    <h2 id="Introduccion"><li>Introducción</li></h2>
+    <h2 id="Introduccion">Introducción</h2>
     <p>Git es un sistema de control de versiones. Nos permite mantener un historial completo del código fuente de un proyecto.</p>
     <hr><!-- ----------------------------------------------------------------------------------------------------------------- -->
 
-    <h2 id="Conceptos"><li>Conceptos básicos</li></h2>
+    <h2 id="Conceptos">Conceptos básicos</h2>
 
     <h3 id="Repo"><u>Repositorio</u></h3>
     <h6><a href="https://git-scm.com/docs/user-manual#repositories-and-branches">Documentación oficial</a></h6>
@@ -72,8 +83,18 @@
 
     <h3 id="Branch"><u>Rama (branch)</u></h3>
     <h6><a href="https://git-scm.com/docs/user-manual#what-is-a-branch">Documentación oficial</a></h6>
-    <p>
-        Una rama es un posible punto de anclaje para poder añadir un nuevo commit.
+    <p>Entender bien el concepto de rama es esencial para el funcionamiento de git,
+        ya que te permitirá entender, entre otros conceptos:
+        <ul>
+            <li>pull</li>
+            <li>push</li>
+            <li>merge</li>
+            <li>merge conflict</li>
+            <li>GitHub</li>
+            <li>repositorio remoto</li>
+        </ul>
+    </p>
+    <p>Una rama es un posible punto de anclaje para poder añadir un nuevo commit.
         Es posible crear 2 (o más) ramas a partir de un mismo commit, es decir, permite ramificar el historial de commits.
     </p>
 
@@ -104,7 +125,9 @@
     <img src="resources/branch4.svg"/>
     <hr><!-- ----------------------------------------------------------------------------------------------------------------- -->
 
-    <h2 id="Merge"><li>Unir ramas (merge)</li></h2>
+    <h2 id="Merge">Unir ramas (merge)</h2>
+    <b><code>pull</code> realiza un merge, por lo que esta sección es de interés
+        si vas a usar <code>pull</code> aunque no uses <code>merge</code>. Ver <code><a href="#git-pull">git pull</a></code> para más información.</b>
     <p>Para entender bien el <code>merge</code>, es fundamental comprender bien el concepto de
         <a href="#Branch">rama (branch)</a>, ya que <code>merge</code> es una operación sobre las ramas.
     </p>
@@ -128,6 +151,104 @@
     <img src="resources/merge3.svg"/>
 
     <h3 id="Conflict"><u>Conflictos</u></h3>
-    <h3 id="SolveConflict"><u>Resolución de conflictos</u></h3>
+    <p>Los conflictos ocurren al unir ramas.
+        Esto se debe a que dos ramas diferentes pueden haber alterado el mismo código de dos maneras diferentes.
+        Los conflictos son situaciones naturales que ocurren con el funcionamiento normal de git,
+        no significa que se haya hecho algo incorrectamente. Todos los conflictos deben ser resueltos para poder completar un <code>merge</code>.
+    </p>
+    <p>Vamos a simular un conflicto al realizar el <code>merge</code> del commit <b>C</b>.</p>
+    <p>Recordemos la estructura del repositorio:</p>
+    <img src="resources/merge2.svg">
+
+    <p>Supongamos que en <b>B</b> existía la función <code>suma()</code> definida de la manera siguiente:</p>
+    <code>
+        def suma(a, b):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;return a + b
+    </code>
+
+    <p>Si ambas ramas que originaron de <b>B</b> modifican ese código, se creará un conflicto.
+        Por ejemplo, si los commits <b>BC</b> y <b>BD</b> modifican el código de esta manera:
+    </p>
+    <h4>BC</h4>
+    <code>
+        def suma(a, b):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;return a + <b>cos(</b>b<b>)</b>
+    </code>
+    <h4>BD</h4>
+    <code>
+        def suma(a, b):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;return a + <b>sin(</b>b<b>)</b>
+    </code>
+    <p><b>BC</b> ha utilizado <code>cos()</code>, mientras que <b>BD</b> ha utilizado <code>sin()</code>.
+        Al unir las ramas, deberemos decidir cómo resolver este conflicto.<br>
+        <ul>
+            <li>Nos podemos quedar con <code>cos()</code> de <b>BC</b>, o <code>sin()</code> de <b>BD</b>.</li>
+            <li>Podemos decidir que ninguna opción es adecuada y utilizar <code>tan()</code>.</li>
+            <li>Podemos crear 2 funciones <code>suma_sin()</code> y <code>suma_cos()</code>.</li>
+            <li>Podemos hacer cualquier cosa que veamos oportuna.</li>
+        </ul>
+        Las opciones son infinitas y cada conflicto se debe estudiar por separado para ver qué manera es la más adecuada de solucionarlo.
+    </p>
+    <hr><!-- ----------------------------------------------------------------------------------------------------------------- -->
+    <h3 id="git-commit"><u><code>git commit</code></u></h3>
+    <p>Esta sección está por explicar</p> <!-- TODO -->
+    <details>
+        <summary>Kate</summary>
+        <p>Texto</p>
+    </details>
+    <details>
+        <summary>Linea de comandos</summary>
+        <p>Texto</p>
+    </details>
+    <h3 id="git-branch"><u><code>git branch</code></u></h3>
+    <p>Esta sección está por explicar</p> <!-- TODO -->
+    <details>
+        <summary>Kate</summary>
+        <p>Texto</p>
+    </details>
+    <details>
+        <summary>Linea de comandos</summary>
+        <p>Texto</p>
+    </details>
+    <h3 id="git-merge"><u><code>git merge</code></u></h3>
+    <p>Esta sección está por explicar</p> <!-- TODO -->
+    <details>
+        <summary>Kate</summary>
+        <p>Texto</p>
+    </details>
+    <details>
+        <summary>Linea de comandos</summary>
+        <p>Texto</p>
+    </details>
+    <h3 id="git-fetch"><u><code>git fetch</code></u></h3>
+    <p>Esta sección está por explicar</p> <!-- TODO -->
+    <details>
+        <summary>Kate</summary>
+        <p>Texto</p>
+    </details>
+    <details>
+        <summary>Linea de comandos</summary>
+        <p>Texto</p>
+    </details>
+    <h3 id="git-pull"><u><code>git pull</code></u></h3>
+    <p>Esta sección está por explicar</p> <!-- TODO -->
+    <details>
+        <summary>Kate</summary>
+        <p>Texto</p>
+    </details>
+    <details>
+        <summary>Linea de comandos</summary>
+        <p>Texto</p>
+    </details>
+    <h3 id="git-push"><u><code>git push</code></u></h3>
+    <p>Esta sección está por explicar</p> <!-- TODO -->
+    <details>
+        <summary>Kate</summary>
+        <p>Texto</p>
+    </details>
+    <details>
+        <summary>Linea de comandos</summary>
+        <p>Texto</p>
+    </details>
 </body>
 </html>
